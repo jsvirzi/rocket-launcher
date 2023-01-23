@@ -53,17 +53,17 @@ int main() {
     drain_udp_socket(udp_client_data);
 
     while (1) {
-        int status = check_socket(udp_client_data->socket_fd);
-        if (status) {
+        // int status = check_socket(udp_client_data->socket_fd);
+        // if (status) {
             char data_string[64];
             ssize_t data_length;
             data_length = udp_client_read(udp_client_data, data_string, sizeof (data_string));
-            printf("%d bytes read\n", data_length);
+            printf("%zd bytes read\n", data_length);
             for (int i = 0; i < data_length; ++i) {
                 if (data_string[i] == '$') { printf("\n"); }
                 printf("%c", data_string[i]);
             }
-        }
+        // }
     }
 
     return 0;

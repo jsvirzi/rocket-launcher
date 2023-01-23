@@ -81,7 +81,7 @@ unsigned int check_socket(int socket_fd)
 static uint8_t rx_data_buff[RX_DATA_BUFF_LENGTH];
 static unsigned int rx_data_head = 0;
 static unsigned int rx_data_tail = 0;
-static unsigned int rx_data_mask = RX_DATA_BUFF_LENGTH - 1;
+static const unsigned int rx_data_mask = RX_DATA_BUFF_LENGTH - 1;
 
 int drain_udp_socket(udp_client_t *client)
 {
@@ -118,7 +118,7 @@ int udp_client_read(udp_client_t *client, void *buf, size_t n_bytes)
         }
     }
 
-    return 0;
+    return index;
 }
 
 int udp_client_write(udp_client_t *client, void *buf, size_t n_bytes)
