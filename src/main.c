@@ -19,7 +19,7 @@
 
 #include "udp-connection.h"
 
-#include <curl/curl.h>
+// #include <curl/curl.h>
 
 int main() {
     udp_client_t udp_client_data[1];
@@ -42,6 +42,9 @@ int main() {
     command_length = snprintf((char *) command_string, sizeof (command_string), "$RTS,0*");
     udp_client_write(udp_client_cmmd, command_string, command_length);
 
+    /* write something for server to capture address */
+    udp_client_write(udp_client_data, command_string, command_length);
+
     drain_udp_socket(udp_client_data);
 
     while (1) {
@@ -50,6 +53,7 @@ int main() {
             char data_string[64];
             ssize_t data_length;
             data_length = udp_client_read(udp_client_data, data_string, sizeof (data_string));
+            printf("%d bytes read\n", data_length);
             for (int i = 0; i < data_length; ++i) {
                 if (data_string[i] == '$') { printf("\n"); }
                 printf("%c", data_string[i]);
