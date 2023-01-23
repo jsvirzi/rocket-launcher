@@ -15,6 +15,6 @@ message("curl flags = " ${CURL_FLAGS})
 message("curl libs = " ${CURL_LIBS})
 
 add_compile_options(${CURL_FLAGS})
-add_link_options(${CURL_LIBS})
+# add_link_options(${CURL_LIBS})
 
 add_executable(rocket_launcher src/main.c src/udp-connection.c)

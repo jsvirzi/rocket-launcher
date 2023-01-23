@@ -30,6 +30,11 @@ int main() {
     udp_client_open(udp_client_cmmd);
     // curl_global_init(CURL_GLOBAL_DEFAULT);
 
+    udp_client_data->verbose_level = 1;
+    udp_client_cmmd->verbose_level = 1;
+    udp_client_data->debug_level = 1;
+    udp_client_cmmd->debug_level = 1;
+
     uint8_t command_string[64];
     ssize_t command_length;
 
