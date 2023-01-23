@@ -24,16 +24,20 @@
 int main() {
     udp_client_t udp_client_data[1];
     udp_client_t udp_client_cmmd[1];
+
+    memset(udp_client_data, 0, sizeof (udp_client_t));
+    memset(udp_client_cmmd, 0, sizeof (udp_client_t));
+    
     udp_client_data->udp_port = 55151;
     udp_client_cmmd->udp_port = udp_client_data->udp_port + 1;
     udp_client_open(udp_client_data);
     udp_client_open(udp_client_cmmd);
     // curl_global_init(CURL_GLOBAL_DEFAULT);
 
-    udp_client_data->verbose_level = 1;
-    udp_client_cmmd->verbose_level = 1;
-    udp_client_data->debug_level = 1;
-    udp_client_cmmd->debug_level = 1;
+    // udp_client_data->verbose_level = 1;
+    // udp_client_cmmd->verbose_level = 1;
+    // udp_client_data->debug_level = 1;
+    // udp_client_cmmd->debug_level = 1;
 
     uint8_t command_string[64];
     ssize_t command_length;
@@ -53,17 +57,16 @@ int main() {
     drain_udp_socket(udp_client_data);
 
     while (1) {
-        // int status = check_socket(udp_client_data->socket_fd);
-        // if (status) {
-            char data_string[64];
-            ssize_t data_length;
-            data_length = udp_client_read(udp_client_data, data_string, sizeof (data_string));
-            printf("%zd bytes read\n", data_length);
-            for (int i = 0; i < data_length; ++i) {
-                if (data_string[i] == '$') { printf("\n"); }
-                printf("%c", data_string[i]);
-            }
-        // }
+        char data_string[64];
+        ssize_t data_length;
+        data_length = udp_client_read(udp_client_data, data_string, sizeof (data_string));
+        printf("%zd bytes read\n", data_length);
+        for (int i = 0; i < data_length; ++i) {
+            uint8_t byte = data_string[i];
+            if (byte == '$') { printf("\n"); }
+            if (byte == '*') { printf("\n"); }
+            printf("%c", data_string[i]);
+        }
     }
 
     return 0;
